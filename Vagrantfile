@@ -65,7 +65,7 @@ Vagrant.configure("2") do |config|
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
     apt-get update
-    apt-get install -y firefox firefox-geckodriver default-jre python3-pip unzip
+    apt-get install -y chromium-browser chromium-chromedriver default-jre python3-pip unzip
     mkdir opt
     cd opt
     wget https://github.com/lightbody/browsermob-proxy/releases/download/browsermob-proxy-2.1.4/browsermob-proxy-2.1.4-bin.zip

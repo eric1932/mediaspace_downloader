@@ -64,7 +64,7 @@ def get_video_info(video_url: str, proxy: Client) -> (str, str):
         return title, last_entry['request']['url']
     else:
         print("m3u8 not found")
-        pass
+        return None
 
 
 if __name__ == '__main__':
@@ -73,11 +73,14 @@ if __name__ == '__main__':
     proxy_server = Server('/home/vagrant/opt/browsermob-proxy-2.1.4/bin/browsermob-proxy')
     # Vagrant
     # proxy_server = Server('/home/vagrant/opt/browsermob-proxy-2.1.4/bin/browsermob-proxy')
+    # Linux
+    # proxy_server = Server('/home/eric/opt/browsermob-proxy-2.1.4/bin/browsermob-proxy')
+
     proxy_server.start()
     proxy = proxy_server.create_proxy()
 
-    # driver = get_driver(browser="c", proxy=proxy, headless=True)
-    driver = get_driver(browser="f", proxy=proxy, headless=True)
+    driver = get_driver(browser="c", proxy=proxy, headless=True)
+    # driver = get_driver(browser="f", proxy=proxy, headless=True)
 
     auto_login(driver)
 
@@ -87,6 +90,7 @@ if __name__ == '__main__':
         # urlretrieve(url, f"{title}.m3u8")
         # append m3u8 to list
         lst = [get_video_info(u, proxy) for u in video_urls]
+        lst = [x for x in lst if x]
 
         with open("urls.csv", "w") as f:
             csv_writer = csv.writer(f)
