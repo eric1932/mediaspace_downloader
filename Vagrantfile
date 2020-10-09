@@ -71,6 +71,6 @@ Vagrant.configure("2") do |config|
     wget https://github.com/lightbody/browsermob-proxy/releases/download/browsermob-proxy-2.1.4/browsermob-proxy-2.1.4-bin.zip
     unzip browsermob-proxy-2.1.4-bin.zip
     rm browsermob-proxy-2.1.4-bin.zip
-    chown -R vagrant: opt
+    chown -R vagrant: .
   SHELL
 end
