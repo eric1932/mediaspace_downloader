@@ -71,8 +71,9 @@ if __name__ == '__main__':
     proxy_server.start()
     proxy = proxy_server.create_proxy()
 
-    driver = get_driver(browser="c", proxy=proxy)
-    # driver = get_driver(browser="f", proxy=proxy)
+    # driver = get_driver(browser="c", proxy=proxy, headless=True)
+    driver = get_driver(browser="f", proxy=proxy, headless=True)
+
     auto_login(driver)
 
     try:

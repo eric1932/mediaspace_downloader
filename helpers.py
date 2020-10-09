@@ -14,18 +14,24 @@ def auto_login(driver):
     submit.click()
 
 
-def get_driver(browser: str, proxy=None):
+def get_driver(browser: str, proxy=None, headless=False):
     if "chrome".startswith(browser.lower()):
         options = webdriver.ChromeOptions()
         options.add_argument('ignore-certificate-errors')
         if proxy:
             options.add_argument('--proxy-server={0}'.format(proxy.proxy))
+        if headless:
+            options.headless = True
         return webdriver.Chrome(options=options)
     elif "firefox".startswith(browser.lower()):
+        options = None
         profile = webdriver.FirefoxProfile()
         profile.accept_untrusted_certs = True
         if proxy:
             profile.set_proxy(proxy.selenium_proxy())
-        return webdriver.Firefox(firefox_profile=profile)
+        if headless:
+            options = webdriver.FirefoxOptions()
+            options.headless = True
+        return webdriver.Firefox(firefox_profile=profile, options=options)
     else:
         pass
