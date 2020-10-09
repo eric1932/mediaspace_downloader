@@ -42,30 +42,35 @@ def get_video_info(video_url: str, proxy: Client) -> (str, str):
             EC.presence_of_element_located((By.XPATH, "//div[@class='videoHolder']/a"))
         )
         video_play.click()
+        print("clicked play button")
     finally:
         pass
     # driver.find_element_by_xpath("//div[@class='videoHolder']/a").click()
 
-    time.sleep(3)  # TODO
+    wait = 3
+    print(f"now wait for {wait} secs")
+    time.sleep(wait)  # TODO
     result = proxy.har
 
     last_entry = {}
     for entry in result['log']['entries']:
         url = entry['request']['url']
-        if "index.m3u8" in url:
+        if "index.m3u8" in url or "a.m3u8" in url:
             # _content = entry['response']['content']['text']
             last_entry = entry
 
     if last_entry:
+        print("found m3u8")
         return title, last_entry['request']['url']
     else:
+        print("m3u8 not found")
         pass
 
 
 if __name__ == '__main__':
     # browsermob
     # Mac
-    proxy_server = Server('/Users/eric/.local/opt/browsermob-proxy-2.1.4/bin/browsermob-proxy')
+    proxy_server = Server('/home/vagrant/opt/browsermob-proxy-2.1.4/bin/browsermob-proxy')
     # Vagrant
     # proxy_server = Server('/home/vagrant/opt/browsermob-proxy-2.1.4/bin/browsermob-proxy')
     proxy_server.start()
